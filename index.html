@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="site_title">II. Világháború Szimulátor & Információk</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-area">
+                <img src="images/header_logo.png" alt="WW2 Icon" id="header-logo">
+                <h1 data-translate="main_heading">II. Világháború: Történelem és Szimuláció</h1>
+            </div>
+            <nav id="language-switcher">
+                <button data-lang="hu" class="lang-btn active" title="Magyar"><img src="images/flag_hu.png" alt="Magyar"></button>
+                <button data-lang="en" class="lang-btn" title="English"><img src="images/flag_en.png" alt="English"></button>
+                <button data-lang="de" class="lang-btn" title="Deutsch"><img src="images/flag_de.png" alt="Deutsch"></button>
+                <button data-lang="es" class="lang-btn" title="Español"><img src="images/flag_es.png" alt="Español"></button>
+            </nav>
+        </div>
+    </header>
+
+    <nav id="main-navigation">
+        <div class="container">
+            <ul>
+                <li><a href="#home" class="nav-link active" data-section="home" data-translate="nav_home">Kezdőlap</a></li>
+                <li><a href="#timeline" class="nav-link" data-section="timeline" data-translate="nav_timeline">Idővonal</a></li>
+                <li><a href="#key-figures" class="nav-link" data-section="key-figures" data-translate="nav_key_figures">Fontos Személyek</a></li>
+                <li><a href="#battles" class="nav-link" data-section="battles" data-translate="nav_battles">Csaták</a></li>
+                <li><a href="#simulation" class="nav-link" data-section="simulation" data-translate="nav_simulation">Szimuláció</a></li>
+                <li><a href="#hungary" class="nav-link" data-section="hungary" data-translate="nav_hungary">Magyarország a II. VH-ban</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- Kezdőlap Szekció -->
+        <section id="home-content" class="content-section active-content">
+            <h2 data-translate="home_title">Üdvözöllek a II. Világháború Interaktív Oldalán!</h2>
+            <p data-translate="home_intro_1">Fedezd fel a XX. század legmeghatározóbb konfliktusát! Ez az oldal 7. osztályos tananyag alapján nyújt betekintést a Második Világháború eseményeibe, szereplőibe és következményeibe. Az információk általánosak, az országspecifikus tantervek eltérhetnek.</p>
+            <p data-translate="home_intro_2">Használd a fenti menüt a navigáláshoz, vagy állítsd be a szimulációt és próbáld ki az interaktív részt. Jó felfedezést!</p>
+            <div class="settings-box">
+                <h3 data-translate="home_settings_title">Szimulációs Beállítások</h3>
+                <p data-translate="home_settings_text">Válaszd ki a szimuláció alapvető paramétereit. Ezek a beállítások befolyásolják a 'Szimuláció' fülön megjelenő forgatókönyveket és interakciókat.</p>
+                <div class="setting-group">
+                    <label for="sim-side" data-translate="setting_side">Válassz oldalt:</label>
+                    <select id="sim-side">
+                        <option value="allies" data-translate="side_allies">Szövetségesek</option>
+                        <option value="axis" data-translate="side_axis">Tengelyhatalmak</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <label for="sim-focus" data-translate="setting_focus">Válassz hadszínteret:</label>
+                    <select id="sim-focus">
+                        <option value="europe" data-translate="focus_europe">Európa (Nyugati Front)</option>
+                        <option value="eastern_front" data-translate="focus_eastern_front">Keleti Front (Európa)</option>
+                        <option value="pacific" data-translate="focus_pacific">Csendes-óceán</option>
+                    </select>
+                </div>
+                <div class="setting-group">
+                    <span data-translate="setting_difficulty">Válassz nehézséget:</span>
+                    <div class="radio-group">
+                        <label><input type="radio" name="sim-difficulty" value="easy" checked> <span data-translate="difficulty_easy">Könnyű</span></label>
+                        <label><input type="radio" name="sim-difficulty" value="normal"> <span data-translate="difficulty_normal">Normál</span></label>
+                        <label><input type="radio" name="sim-difficulty" value="hard"> <span data-translate="difficulty_hard">Nehéz</span></label>
+                    </div>
+                </div>
+                <button id="apply-settings-btn" data-translate="apply_settings_button">Beállítások Alkalmazása és Mentése</button>
+                <p id="settings-feedback" class="feedback-message"></p>
+            </div>
+        </section>
+
+        <!-- Idővonal Szekció -->
+        <section id="timeline-content" class="content-section">
+            <h2 data-translate="timeline_title">A II. Világháború Idővonala</h2>
+            <p data-translate="timeline_intro">Kövesd végig a háború legfontosabb eseményeit kronologikus sorrendben.</p>
+            <ul class="timeline">
+                <li><div class="timeline-badge"><i class="icon-calendar"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1939_09_01_date">1939. Szeptember 1.</h4></div><div class="timeline-body"><p data-translate="event_1939_09_01_desc">Németország lerohanja Lengyelországot, a háború kezdete Európában.</p></div></div></li>
+                <li class="timeline-inverted"><div class="timeline-badge warning"><i class="icon-bomb"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1940_05_10_date">1940. Május 10.</h4></div><div class="timeline-body"><p data-translate="event_1940_05_10_desc">Német támadás Franciaország és a Benelux államok ellen (villámháború).</p></div></div></li>
+                <li><div class="timeline-badge danger"><i class="icon-fire"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1941_06_22_date">1941. Június 22.</h4></div><div class="timeline-body"><p data-translate="event_1941_06_22_desc">A Barbarossa-hadművelet: Németország megtámadja a Szovjetuniót.</p></div></div></li>
+                <li class="timeline-inverted"><div class="timeline-badge info"><i class="icon-plane"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1941_12_07_date">1941. December 7.</h4></div><div class="timeline-body"><p data-translate="event_1941_12_07_desc">Japán támadás Pearl Harbor ellen; az USA belép a háborúba.</p></div></div></li>
+                <li><div class="timeline-badge success"><i class="icon-ship"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1944_06_06_date">1944. Június 6.</h4></div><div class="timeline-body"><p data-translate="event_1944_06_06_desc">A normandiai partraszállás (D-nap), a nyugati front megnyitása.</p></div></div></li>
+                <li class="timeline-inverted"><div class="timeline-badge primary"><i class="icon-flag"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1945_05_08_date">1945. Május 8.</h4></div><div class="timeline-body"><p data-translate="event_1945_05_08_desc">A háború vége Európában (VE-nap).</p></div></div></li>
+                <li><div class="timeline-badge dark"><i class="icon-peace"></i></div><div class="timeline-panel"><div class="timeline-heading"><h4 class="timeline-event-title" data-translate="event_1945_09_02_date">1945. Szeptember 2.</h4></div><div class="timeline-body"><p data-translate="event_1945_09_02_desc">Japán kapitulációja, a II. világháború hivatalos vége.</p></div></div></li>
+            </ul>
+        </section>
+
+        <section id="key-figures-content" class="content-section">
+            <h2 data-translate="key_figures_title">A Háború Kulcsfigurái</h2>
+            <p data-translate="key_figures_intro">Ismerd meg azokat a vezetőket és személyiségeket, akik formálták a háború menetét.</p>
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/churchill.png" alt="Winston Churchill" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="figure_churchill_name">Winston Churchill</h3>
+                        <p class="card-subtitle" data-translate="figure_churchill_role">Nagy-Britannia miniszterelnöke</p>
+                        <p data-translate="figure_churchill_desc">Legendás szónok, aki országa ellenállását vezette a náci Németországgal szemben.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/roosevelt.png" alt="Franklin D. Roosevelt" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="figure_roosevelt_name">Franklin D. Roosevelt</h3>
+                        <p class="card-subtitle" data-translate="figure_roosevelt_role">Az Amerikai Egyesült Államok elnöke</p>
+                        <p data-translate="figure_roosevelt_desc">Vezette az USA-t a háború nagy részében, kulcsszerepet játszott a Szövetségesek győzelmében.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/stalin.png" alt="Joszif Sztálin" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="figure_stalin_name">Joszif Sztálin</h3>
+                        <p class="card-subtitle" data-translate="figure_stalin_role">A Szovjetunió vezetője</p>
+                        <p data-translate="figure_stalin_desc">Diktatórikus vezető, akinek országa óriási áldozatok árán állította meg a német előrenyomulást a keleti fronton.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/hitler.png" alt="Adolf Hitler" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="figure_hitler_name">Adolf Hitler</h3>
+                        <p class="card-subtitle" data-translate="figure_hitler_role">Németország Führere</p>
+                        <p data-translate="figure_hitler_desc">A náci párt vezetője, a II. világháború és a Holokauszt fő felelőse.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="battles-content" class="content-section">
+            <h2 data-translate="battles_title">Meghatározó Csaták</h2>
+            <p data-translate="battles_intro">Ismerj meg néhányat a II. világháború legfontosabb és legvéresebb ütközetei közül.</p>
+            <div class="card-container">
+                <div class="card">
+                    <img src="images/stalingrad_battle.png" alt="Sztálingrádi csata" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="battle_stalingrad_name">Sztálingrádi csata (1942-43)</h3>
+                        <p data-translate="battle_stalingrad_desc">Fordulópont a keleti fronton. A Vörös Hadsereg itt állította meg és fordította vissza a német előrenyomulást.</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="images/normandy_battle.png" alt="Normandiai partraszállás" class="card-img">
+                    <div class="card-content">
+                        <h3 data-translate="battle_normandy_name">Normandiai partraszállás (1944)</h3>
+                        <p data-translate="battle_normandy_desc">A szövetséges erők partraszállása Franciaországban, ami megnyitotta a nyugati frontot és felgyorsította Németország vereségét.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="simulation-content" class="content-section">
+            <h2 data-translate="simulation_title">Interaktív Forgatókönyvek</h2>
+            <p data-translate="simulation_intro">Ez a rész a Kezdőlapon beállított paraméterek alapján kínál interaktív forgatókönyveket. A döntéseid befolyásolják a leírt kimenetelt.</p>
+            <div id="current-sim-settings-display" class="info-box">
+                <h3 data-translate="simulation_current_settings_title">Aktuális Szimulációs Beállítások</h3>
+                <p><strong data-translate="simulation_current_side">Választott oldal</strong>: <span id="display-sim-side">-</span></p>
+                <p><strong data-translate="simulation_current_focus">Választott hadszíntér</strong>: <span id="display-sim-focus">-</span></p>
+                <p><strong data-translate="simulation_current_difficulty">Választott nehézség</strong>: <span id="display-sim-difficulty">-</span></p>
+            </div>
+            <div id="scenario-display-area" class="simulation-module">
+                <h3 id="scenario-title-placeholder" data-translate="simulation_scenario_title">Forgatókönyv</h3>
+                <img id="scenario-image" src="" alt="Scenario image" class="scenario-img">
+                <div class="scenario-img-placeholder" style="display: flex;"></div> 
+                <p id="scenario-description-placeholder" data-translate="settings_not_set_simulation">Kérjük, először állítsd be a szimulációs paramétereket a Kezdőlapon a forgatókönyv megtekintéséhez!</p>
+                <p id="scenario-choose-option-text" class="choose-option-prompt" style="display:none;" data-translate="scenario_choose_option">Válassz egy opciót:</p>
+                <div id="scenario-choices-container"></div>
+            </div>
+            <div id="outcome-display-area" class="simulation-module" style="display:none;">
+                <h3 data-translate="simulation_outcome_title">Következmény:</h3>
+                <p id="outcome-description"></p>
+                <button id="restart-scenario-btn">Új Forgatókönyv / Beállítások Módosítása</button>
+            </div>
+        </section>
+
+        <section id="hungary-content" class="content-section">
+            <h2 data-translate="hungary_title">Magyarország a II. Világháborúban</h2>
+            <img src="images/hungary_ww2.png" alt="Magyarország a II. Világháborúban" class="content-image-right">
+            <p data-translate="hungary_intro">Magyarország szerepe a II. világháborúban összetett és tragikus. Az ország kezdetben a tengelyhatalmak oldalán vett részt a konfliktusban, jelentős területi revíziókat elérve.</p>
+            <p data-translate="hungary_p1">A háború előrehaladtával azonban egyre súlyosabb veszteségeket szenvedett, és 1944-ben német megszállás alá került, majd a háború végén a szovjet érdekszférába.</p>
+            <p data-translate="hungary_p2">A magyarországi zsidóság tragédiája, a Holokauszt, szintén a korszak sötét fejezete. Az ország sorsa a háború után évtizedekre megpecsételődött.</p>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>© <span id="currentYear"></span> <span data-translate="site_title">II. Világháború Szimulátor & Információk</span>. Készítette: Pálnagy Szilárd</p>
+            <p>Az információk oktatási célokat szolgálnak. Források: Wikipedia, Britannica</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
