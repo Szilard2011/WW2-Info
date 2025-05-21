@@ -25,6 +25,6 @@ This project was created as a [school project / personal learning project] to ex
 
 ## How to View
 
-The live website is hosted on GitHub Pages: [Link to your GitHub Pages site will appear here after deployment]
+The live website is hosted on GitHub Pages: https://szilard2011.github.io/WW2-Info/
 
 *This project was created by Pálnagy Szilárd.*
