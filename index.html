@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title data-translate="site_title">II. Világháború Szimulátor & Információk</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -63,12 +63,24 @@
                 <div class="setting-group">
                     <span data-translate="setting_difficulty">Válassz nehézséget:</span>
                     <div class="radio-group">
-                        <label><input type="radio" name="sim-difficulty" value="easy" checked> <span data-translate="difficulty_easy">Könnyű</span></label>
-                        <label><input type="radio" name="sim-difficulty" value="normal"> <span data-translate="difficulty_normal">Normál</span></label>
-                        <label><input type="radio" name="sim-difficulty" value="hard"> <span data-translate="difficulty_hard">Nehéz</span></label>
+                        <label>
+                            <input type="radio" name="sim-difficulty" value="easy" checked>
+                            <span class="custom-radio"></span>
+                            <span data-translate="difficulty_easy">Könnyű</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="sim-difficulty" value="normal">
+                            <span class="custom-radio"></span>
+                            <span data-translate="difficulty_normal">Normál</span>
+                        </label>
+                        <label>
+                            <input type="radio" name="sim-difficulty" value="hard">
+                            <span class="custom-radio"></span>
+                            <span data-translate="difficulty_hard">Nehéz</span>
+                        </label>
                     </div>
                 </div>
-                <button id="apply-settings-btn" data-translate="apply_settings_button">Beállítások Alkalmazása és Mentése</button>
+                <button id="apply-settings-btn" class="btn btn-accent" data-translate="apply_settings_button">Beállítások Alkalmazása és Mentése</button>
                 <p id="settings-feedback" class="feedback-message"></p>
             </div>
         </section>
@@ -168,7 +180,7 @@
             <div id="outcome-display-area" class="simulation-module" style="display:none;">
                 <h3 data-translate="simulation_outcome_title">Következmény:</h3>
                 <p id="outcome-description"></p>
-                <button id="restart-scenario-btn">Új Forgatókönyv / Beállítások Módosítása</button>
+                <button id="restart-scenario-btn" class="btn btn-primary-custom">Új Forgatókönyv / Beállítások Módosítása</button>
             </div>
         </section>
 
@@ -183,8 +195,8 @@
 
     <footer>
         <div class="container">
-            <p>© <span id="currentYear"></span> <span data-translate="site_title">II. Világháború Szimulátor & Információk</span>. Készítette: Pálnagy Szilárd</p>
-            <p>Az információk oktatási célokat szolgálnak. Források: Wikipedia, Britannica</p>
+            <p>© <span id="currentYear">2025</span> <span data-translate="site_title">II. Világháború Szimulátor & Információk</span>. Készítette: Pálnagy Szilárd</p>
+            <p>Az információk oktatási célokat szolgálnak. Források: [pl. tankönyvek, Wikipédia ellenőrzött adatokkal]</p>
         </div>
     </footer>
 
