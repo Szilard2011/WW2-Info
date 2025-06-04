@@ -1,18 +1,18 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Globális változók és DOM elemek
+    // Global variables and DOM elements
     const langSwitcher = document.getElementById('language-switcher');
     const mainNavLinks = document.querySelectorAll('#main-navigation .nav-link');
     const contentSections = document.querySelectorAll('.content-section');
     const currentYearSpan = document.getElementById('currentYear');
 
-    // Szimulációs beállítások elemei (Kezdőlap)
+    // Simulation settings elements (Homepage)
     const simSideSelect = document.getElementById('sim-side');
     const simFocusSelect = document.getElementById('sim-focus');
     const simDifficultyRadios = document.querySelectorAll('input[name="sim-difficulty"]');
     const applySettingsBtn = document.getElementById('apply-settings-btn');
     const settingsFeedback = document.getElementById('settings-feedback');
 
-    // Szimuláció fül elemei
+    // Simulation tab elements
     const displaySimSide = document.getElementById('display-sim-side');
     const displaySimFocus = document.getElementById('display-sim-focus');
     const displaySimDifficulty = document.getElementById('display-sim-difficulty');
@@ -31,30 +31,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let translations = {};
     let currentLanguage = localStorage.getItem('preferredLanguage') || 'hu';
-    let currentSimSettings = JSON.parse(localStorage.getItem('simSettings')) || {}; // Kezdetben üres objektum
+    let currentSimSettings = JSON.parse(localStorage.getItem('simSettings')) || {};
 
-    // --- INICIALIZÁLÁS ---
+    // --- INITIALIZATION ---
     async function initializeApp() {
         await loadTranslations();
-        setLanguage(currentLanguage); // Ez frissíti a DOM-ot is
-        // Csak akkor frissítjük a bemeneti mezőket, ha vannak mentett beállítások
+        setLanguage(currentLanguage);
+        
         if (currentSimSettings && currentSimSettings.side) {
             updateSimSettingsInputs();
-        } else { // Ha nincsenek, beállítjuk az alapértelmezettet, de nem mentjük még localStorage-ba
+        } else {
             currentSimSettings = {
                 side: 'allies',
                 focus: 'europe',
                 difficulty: 'easy'
             };
-            updateSimSettingsInputs(); // Frissítjük az inputokat az alapértelmezettel
+            updateSimSettingsInputs();
         }
         setupEventListeners();
         showSection('home');
-        updateCurrentYear();
-        updateSimulationTabDisplay(); // Kezdeti szimulációs fül állapot
+        updateCurrentYear(); // This will set it from JS, not hardcoded in HTML
+        updateSimulationTabDisplay();
     }
 
-    // --- FORDÍTÁSOK KEZELÉSE ---
+    // --- TRANSLATION HANDLING ---
     async function loadTranslations() {
         try {
             const response = await fetch('translations.json');
@@ -79,11 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.querySelectorAll('[data-translate]').forEach(el => {
             const key = el.dataset.translate;
-            if (translations[lang] && translations[lang][key] !== undefined) {
-                const translationText = translations[lang][key];
+            const langTranslations = translations[lang] || {};
+            if (langTranslations[key] !== undefined) {
+                const translationText = langTranslations[key];
                 if (el.tagName === 'INPUT' && (el.type === 'submit' || el.type === 'button') || el.tagName === 'BUTTON') {
-                    el.value = translationText;
-                    if (el.tagName === 'BUTTON') el.textContent = translationText; // Gomboknak explicit textContent is kellhet
+                    el.value = translationText; // For input buttons
+                    if (el.tagName === 'BUTTON') el.textContent = translationText; // For button elements
                 } else if (el.tagName === 'TITLE') {
                     el.textContent = translationText;
                 } else {
@@ -94,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
         updateSimulationTabDisplay();
     }
 
-    // --- NAVIGÁCIÓ KEZELÉSE ---
+    // --- NAVIGATION HANDLING ---
     function showSection(sectionId) {
         contentSections.forEach(section => {
             section.classList.toggle('active-content', section.id === `${sectionId}-content`);
@@ -107,20 +108,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- LÁBLÉC ÉV FRISSÍTÉSE ---
+    // --- FOOTER YEAR UPDATE ---
     function updateCurrentYear() {
         if (currentYearSpan) {
             currentYearSpan.textContent = new Date().getFullYear();
         }
     }
 
-    // --- SZIMULÁCIÓS BEÁLLÍTÁSOK KEZELÉSE (KEZDŐLAP) ---
+    // --- SIMULATION SETTINGS HANDLING (HOMEPAGE) ---
     function updateSimSettingsInputs() {
-        // Biztosítjuk, hogy currentSimSettings létezzen
         if (!currentSimSettings) currentSimSettings = {}; 
         
-        simSideSelect.value = currentSimSettings.side || 'allies'; // Fallback alapértelmezettre
-        simFocusSelect.value = currentSimSettings.focus || 'europe'; // Fallback
+        simSideSelect.value = currentSimSettings.side || 'allies';
+        simFocusSelect.value = currentSimSettings.focus || 'europe';
         
         let difficultySet = false;
         simDifficultyRadios.forEach(radio => {
@@ -131,14 +131,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 radio.checked = false;
             }
         });
-        // Ha valamiért nem volt érvényes difficulty, az easy-t választjuk
-        if (!difficultySet) {
-            simDifficultyRadios.forEach(radio => {
+        if (!difficultySet && simDifficultyRadios.length > 0) { // Ensure 'easy' is checked if no valid setting
+             simDifficultyRadios.forEach(radio => {
                 if (radio.value === 'easy') radio.checked = true;
             });
         }
     }
-
 
     function handleApplySettings() {
         currentSimSettings.side = simSideSelect.value;
@@ -151,32 +149,32 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('simSettings', JSON.stringify(currentSimSettings));
 
         const messageKey = "settings_applied_message";
-        settingsFeedback.textContent = translations[currentLanguage]?.[messageKey] || "Settings saved!";
+        settingsFeedback.textContent = (translations[currentLanguage] && translations[currentLanguage][messageKey]) || "Settings saved!";
         setTimeout(() => { settingsFeedback.textContent = ''; }, 3000);
 
         updateSimulationTabDisplay();
     }
 
-    // --- SZIMULÁCIÓ FÜL MEGJELENÍTÉSÉNEK FRISSÍTÉSE ---
+    // --- SIMULATION TAB DISPLAY UPDATE ---
     function updateSimulationTabDisplay() {
         if (!translations[currentLanguage] || !currentSimSettings) return;
 
-        displaySimSide.textContent = translations[currentLanguage]?.[`side_${currentSimSettings.side}`] || currentSimSettings.side || '-';
-        displaySimFocus.textContent = translations[currentLanguage]?.[`focus_${currentSimSettings.focus}`] || currentSimSettings.focus || '-';
-        displaySimDifficulty.textContent = translations[currentLanguage]?.[`difficulty_${currentSimSettings.difficulty}`] || currentSimSettings.difficulty || '-';
+        const langTranslations = translations[currentLanguage] || {};
+
+        displaySimSide.textContent = langTranslations[`side_${currentSimSettings.side}`] || currentSimSettings.side || '-';
+        displaySimFocus.textContent = langTranslations[`focus_${currentSimSettings.focus}`] || currentSimSettings.focus || '-';
+        displaySimDifficulty.textContent = langTranslations[`difficulty_${currentSimSettings.difficulty}`] || currentSimSettings.difficulty || '-';
 
         loadScenario();
     }
 
     function getScenarioKey(settings) {
-        if (!settings || !settings.side || !settings.focus) return null; // Ha hiányosak a beállítások
+        if (!settings || !settings.side || !settings.focus) return null;
 
         if (settings.side === 'allies' && settings.focus === 'europe') return 'allies_europe_1944';
         if (settings.side === 'axis' && settings.focus === 'eastern_front') return 'axis_eastern_front_1942';
         if (settings.side === 'allies' && settings.focus === 'pacific') return 'allies_pacific_1942';
         if (settings.side === 'axis' && settings.focus === 'pacific') return 'axis_pacific_1941';
-        // Ha a Tengelyhatalmak és Európa (Nyugati Front) van kiválasztva, és nincs rá forgatókönyv, null-t adunk vissza.
-        // A loadScenario() ezt kezeli majd a "scenario_not_available" üzenettel.
         return null;
     }
 
@@ -188,19 +186,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const langTranslations = translations[currentLanguage] || {};
 
-        // 1. Ellenőrzés: Vannak-e alapvető beállítások?
         if (!currentSimSettings || !currentSimSettings.side || !currentSimSettings.focus || !currentSimSettings.difficulty) {
             scenarioTitlePlaceholder.textContent = langTranslations['simulation_scenario_title'] || "Scenario";
             scenarioDescriptionPlaceholder.innerHTML = langTranslations['settings_not_set_simulation'] || "Please set simulation parameters on the Homepage first.";
             scenarioImageElement.style.display = 'none';
             scenarioImagePlaceholderDiv.style.display = 'flex';
-            scenarioImagePlaceholderDiv.innerHTML = ''; // Töröljük a placeholder szöveget, ha volt
+            scenarioImagePlaceholderDiv.innerHTML = '';
             return;
         }
         
         const scenarioBaseKey = getScenarioKey(currentSimSettings);
 
-        // 2. Ellenőrzés: A jelenlegi beállításokhoz van-e érvényes forgatókönyv kulcs ÉS cím a fordításban?
         if (!scenarioBaseKey || !langTranslations[`scenario_${scenarioBaseKey}_title`]) {
             scenarioTitlePlaceholder.textContent = langTranslations['simulation_scenario_title'] || "Scenario";
             scenarioDescriptionPlaceholder.innerHTML = langTranslations['scenario_not_available'] || "No scenario available for this combination of settings. Please choose different settings on the Homepage.";
@@ -210,8 +206,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Ha van érvényes forgatókönyv:
-        scenarioImagePlaceholderDiv.innerHTML = ''; // Biztosítjuk, hogy a placeholder szövege tiszta
+        scenarioImagePlaceholderDiv.innerHTML = '';
 
         scenarioTitlePlaceholder.textContent = langTranslations[`scenario_${scenarioBaseKey}_title`];
         scenarioDescriptionPlaceholder.innerHTML = langTranslations[`scenario_${scenarioBaseKey}_desc`];
@@ -239,6 +234,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (langTranslations[choiceKey]) {
                 hasChoices = true;
                 const button = document.createElement('button');
+                button.classList.add('btn'); // ADDING .btn CLASS FOR STYLING
+                // button.classList.add('btn-secondary'); // Optional: if you want specific color for choice buttons
                 button.innerHTML = langTranslations[choiceKey];
                 button.dataset.choice = i;
                 button.addEventListener('click', handleScenarioChoice);
@@ -257,7 +254,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const difficulty = currentSimSettings.difficulty;
         const langTranslations = translations[currentLanguage] || {};
 
-
         const outcomeKey = `scenario_${scenarioBaseKey}_outcome${choiceNumber}_${difficulty}`;
         let outcomeText = langTranslations[outcomeKey];
 
@@ -271,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         outcomeDisplayArea.style.display = 'block';
     }
 
-    // --- ESEMÉNYFIGYELŐK BEÁLLÍTÁSA ---
+    // --- EVENT LISTENERS SETUP ---
     function setupEventListeners() {
         if (langSwitcher) {
             langSwitcher.addEventListener('click', (e) => {
@@ -295,11 +291,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (restartScenarioBtn) {
             restartScenarioBtn.addEventListener('click', () => {
-                showSection('home'); // Visszavisz a kezdőlapra, ahol a beállítások módosíthatók
+                showSection('home');
             });
         }
     }
 
-    // Alkalmazás indítása
+    // Start the application
     initializeApp();
 });
